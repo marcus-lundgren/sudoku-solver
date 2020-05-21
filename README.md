@@ -17,7 +17,7 @@ Before running the program, a desired board to solve can be set in the `main.py`
 
     $ python3 /path/to/main.py
 
-The solving progress will be visualized in the terminal with a hardcoded sleep pauses between each action/frame. If this kind of time delaying eye candy isn't needed, commenting out the two lines regarding sleep and view printing in `solver.py` will significantly speed up the execution.
+The solving progress will be visualized in the terminal with a hardcoded sleep pause between each action/frame. If this kind of time delaying eye candy isn't needed, commenting out the two lines regarding sleep and view printing in `solver.py` will significantly speed up the execution.
 
 If a solution is found, a screen showing the starting of state and solution will be displayed:
 
