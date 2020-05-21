@@ -25,14 +25,12 @@ class Board:
         # Check the row
         row = self.get_row(y)
         for s in row:
-            # print(f"ROW - {s.get_value()} == {value} ??")
             if s.get_value() == value:
                 return False
 
         # Check the column
         col = self.get_column(x)
         for s in col:
-            # print(f"COL - {s.get_value()} == {value} ??")
             if s.get_value() == value:
                 return False
 
@@ -44,8 +42,6 @@ class Board:
             for index, s in enumerate(row):
                 if index < square_col_start or square_col_start + 2 < index:
                     continue
-
-                # print(f"SS - {s.get_value()} == {value} ??")
 
                 if s.get_value() == value:
                     return False
