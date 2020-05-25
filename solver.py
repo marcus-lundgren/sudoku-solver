@@ -14,7 +14,7 @@ class Solver:
             self.view.print_loss()
 
     def _solver(self, x: int, y: int):
-        is_on_last_index = x == -1
+        is_on_last_index = x == None
 
         # If we are on the last square index,
         # then all of the squares are correct!
@@ -56,4 +56,4 @@ class Solver:
             return 0, y + 1
 
         # We're out of bounds, return invalid location
-        return -1, -1
+        return None, None
