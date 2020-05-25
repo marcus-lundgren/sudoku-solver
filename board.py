@@ -14,11 +14,11 @@ class Board:
         return squares
 
     def is_set(self, x, y):
-        return self.squares[x + y * 9].is_set()
+        return self._get_square(x, y).is_set()
 
     def set_square(self, x, y, value):
         is_valid = self.is_valid(x, y, value)
-        self.squares[x + y * 9].set_value(value)
+        self._get_square(x, y).set_value(value)
         return is_valid
 
     def is_valid(self, x, y, value: int) -> bool:
@@ -38,11 +38,8 @@ class Board:
         square_row_start = int(y / 3) * 3
         square_col_start = int(x / 3) * 3
         for row_num in range(square_row_start, square_row_start + 3):
-            row = self.get_row(row_num)
-            for index, s in enumerate(row):
-                if index < square_col_start or square_col_start + 2 < index:
-                    continue
-
+            for col_num in range(square_col_start, square_col_start + 3):
+                s = self._get_square(col_num, row_num)
                 if s.get_value() == value:
                     return False
 
@@ -50,10 +47,13 @@ class Board:
         return True
 
     def clear_square(self, x: int, y: int):
-        self.squares[x + y * 9].set_value(None)
+        self._get_square(x, y).set_value(None)
 
     def get_row(self, row_num: int):
         return self.squares[9 * row_num : 9 * (row_num + 1)]
 
     def get_column(self, col_num: int):
         return self.squares[col_num :: 9]
+
+    def _get_square(self, x, y):
+        return self.squares[x + y * 9]
