@@ -3,9 +3,11 @@ from board import Board
 from view import View
 
 class Solver:
-    def __init__(self, board: Board, view: View):
+    def __init__(self, board: Board, view: View, visualize_steps: bool = False, step_sleep: float = 0.001):
         self.board = board
         self.view = view
+        self.visualize_steps = visualize_steps
+        self.step_sleep = step_sleep
 
     def solve(self):
         if self._solver(0, 0):
@@ -14,7 +16,7 @@ class Solver:
             self.view.print_loss()
 
     def _solver(self, x: int, y: int):
-        is_on_last_index = x == None
+        is_on_last_index = x is None
 
         # If we are on the last square index,
         # then all of the squares are correct!
@@ -29,10 +31,8 @@ class Solver:
         for i in range(1, 10, 1):
             is_valid_placement = self.board.set_square(x, y, i)
 
-            # Uncomment these lines to skip displaying the steps.
-            # Will make the solving significantly much faster.
-            time.sleep(0.0005)
-            self.view.print()
+            if self.visualize_steps:
+                self._print_step()
 
             if is_valid_placement:
                 if not self._solver(new_x, new_y):
@@ -57,3 +57,7 @@ class Solver:
 
         # We're out of bounds, return invalid location
         return None, None
+
+    def _print_step(self):
+        time.sleep(self.step_sleep)
+        self.view.print()

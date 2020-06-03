@@ -18,5 +18,5 @@ board = Board(b)
 view = View(board)
 view.print()
 
-solver = Solver(board, view)
+solver = Solver(board, view, visualize_steps = True)
 solver.solve()

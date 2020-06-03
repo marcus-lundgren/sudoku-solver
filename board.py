@@ -1,3 +1,4 @@
+from collections import Counter
 from square import Square
 
 class Board:
@@ -14,10 +15,7 @@ class Board:
             raise ValueError('The given board string does not result in a valid starting point.')
 
     def create_board(self, board_string: str):
-        squares = []
-        for c in board_string:
-            squares.append(Square(c))
-        return squares
+        return [Square(c) for c in board_string]
 
     def is_set(self, x, y):
         return self._get_square(x, y).is_set()
@@ -30,21 +28,18 @@ class Board:
     def is_valid(self, x, y, value: int) -> bool:
         # Check the row
         row = self.get_row(y)
-        for s in row:
-            if s.get_value() == value:
-                return False
+        if any([s.get_value() == value for s in row]):
+            return False
 
         # Check the column
         col = self.get_column(x)
-        for s in col:
-            if s.get_value() == value:
-                return False
+        if any([s.get_value() == value for s in col]):
+            return False
 
         # Check the square of squares
         sos = self.get_square_of_squares(x, y)
-        for s in sos:
-            if s.get_value() == value:
-                return False
+        if any([s.get_value() == value for s in sos]):
+            return False
 
         # If we got this far, then the value is valid!
         return True
@@ -59,18 +54,9 @@ class Board:
         return self.squares[col_num :: 9]
 
     def _is_valid_square_range(self, squares):
-        known = []
-        for s in squares:
-            value = s.get_value()
-            if value is None:
-                continue
-
-            if value in known:
-                return False
-
-            known.append(value)
-
-        return True
+        counter = Counter([s.get_value() for s in squares if s.get_value() is not None])
+        items = counter.items()
+        return all([v == 1 for k, v in items])
 
     def get_square_of_squares(self, x, y):
         square_row_start = int(y / 3) * 3
@@ -83,17 +69,11 @@ class Board:
         return self.squares[x + y * 9]
 
     def is_board_valid(self):
-        # Check the rows
-        for y in range(0, 9):
-            row = self.get_row(y)
-            if not self._is_valid_square_range(row):
-                return False
+        # Check the rows and columns
+        if not all([self._is_valid_square_range(self.get_row(i)) and self._is_valid_square_range(self.get_column(i)) for i in range(0, 9)]):
+            return False
 
-        for x in range(0, 9):
-            col = self.get_column(x)
-            if not self._is_valid_square_range(col):
-                return False
-
+        # Check squares of squares
         for x in range(0, 9, 3):
             for y in range(0, 9, 3):
                 sos = self.get_square_of_squares(x, y)
