@@ -1,22 +1,27 @@
 from board import Board
 from view import View
 from solver import Solver
+import curses
 
-b =   '   9 3   '
-b +=  ' 5 2  84 '
-b +=  '3    4   '
 
-b +=  '    3 5 1'
-b +=  '78 5     '
-b +=  '     6 94'
+def main(stdscr: curses.window):
+    b =  '4 9      '
+    b += '       2 '
+    b += '18 7   6 '
 
-b +=  '9        '
-b +=  ' 641   7 '
-b +=  '    2765 '
+    b += '7   6    '
+    b += ' 9     3 '
+    b += '    23  6'
 
-board = Board(b)
-view = View(board)
-view.print()
+    b += '  3      '
+    b += '  2   5 3'
+    b += '   9 7  4'
 
-solver = Solver(board, view, visualize_steps = True)
-solver.solve()
+    board = Board(b)
+    view = View(board, stdscr)
+
+    solver = Solver(board, view)
+    solver.solve()
+
+
+curses.wrapper(main)
