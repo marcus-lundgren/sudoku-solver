@@ -1,4 +1,3 @@
-import copy
 import curses
 from board import Board
 
