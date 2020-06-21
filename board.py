@@ -71,8 +71,8 @@ class Board:
         return self.squares[col_num :: 9]
 
     def _get_square_of_squares(self, x: int, y: int) -> enumerate:
-        square_row_start = int(y / 3) * 3
-        square_col_start = int(x / 3) * 3
+        square_row_start = (y // 3) * 3
+        square_col_start = (x // 3) * 3
         for row_num in range(square_row_start, square_row_start + 3):
             for col_num in range(square_col_start, square_col_start + 3):
                 yield self.get_square(col_num, row_num)

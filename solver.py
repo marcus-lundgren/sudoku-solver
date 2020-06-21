@@ -8,6 +8,7 @@ class Solver:
         self.board = board
         self.view = view
         self.step_sleep = step_sleep
+        self.steps_made = 0
 
     def solve(self):
         self.view.print_grid()
@@ -15,15 +16,24 @@ class Solver:
         # Calculate a list of non invalid values based on the starting state of the board.
         for y in range(0, 9):
             for x in range(0, 9):
+                s = self.board.get_square(x, y)
+
+                # This square has a solution already as it was provided in the starting state.
+                if s.get_value() is not None:
+                    continue
+
+                # Find the possible values for the square
                 for i in range(1, 10):
-                    s = self.board.get_square(x, y)
-                    # This square has a solution already as it was provided in the starting state.
-                    if s.get_value() is not None:
-                        continue
 
                     # Add the value if it is valid given the starting state of the board.
                     if self.board.is_valid(x, y, i):
                         s.add_valid_value(i)
+
+                # If only one possible valid value is found, then we can set it from the start.
+                if len(s.valid_values) == 1:
+                    self.steps_made += 1
+                    s.set_value(s.valid_values[0])
+                    self.view.print_square(x, y, s.get_value(), 3)
 
         if self._solver(0, 0):
             self.view.print_win()
@@ -45,6 +55,8 @@ class Solver:
 
         s = self.board.get_square(x, y)
         for i in s.valid_values:
+            self.steps_made += 1
+            self.view.print_steps_made(self.steps_made)
             is_valid_placement = self.board.set_square(x, y, i)
 
             self.view.print_square(x, y, i)
