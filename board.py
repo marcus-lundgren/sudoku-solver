@@ -1,6 +1,5 @@
 from collections import Counter
 from square import Square
-from functools import lru_cache
 import typing
 
 

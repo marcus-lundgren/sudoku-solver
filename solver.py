@@ -12,6 +12,7 @@ class Solver:
 
     def solve(self):
         self.view.print_grid()
+        start = time.time()
 
         # Calculate a list of non invalid values based on the starting state of the board.
         for y in range(0, 9):
@@ -39,6 +40,9 @@ class Solver:
             self.view.print_win()
         else:
             self.view.print_loss()
+
+        solved_time = time.time() - start
+        self.view.print_time(solved_time)
 
     def _solver(self, x: int, y: int) -> bool:
         is_on_last_index = x is None

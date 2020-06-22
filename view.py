@@ -44,9 +44,13 @@ class View:
     def print_steps_made(self, steps_made: int):
         self.stdscr.addstr(13, 2, f"Steps made: {steps_made}")
 
+    def print_time(self, solving_time: float):
+        self.stdscr.addstr(15, 2, f"Solved in {solving_time} seconds")
+        self.stdscr.refresh()
+        self.stdscr.getkey()
+
     def _print_outcome(self, text: str):
         self.stdscr.addstr(14, 2, text)
-        self.stdscr.getkey()
 
     def print_win(self):
         self._print_outcome("Solution found!")
