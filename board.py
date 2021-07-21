@@ -26,17 +26,17 @@ class Board:
     def is_valid(self, x: int, y: int, value: int) -> bool:
         # Check the row
         row = self._get_row(y)
-        if any([s.get_value() == value for s in row]):
+        if any((s.get_value() == value for s in row)):
             return False
 
         # Check the column
         col = self._get_column(x)
-        if any([s.get_value() == value for s in col]):
+        if any((s.get_value() == value for s in col)):
             return False
 
         # Check the square of squares
         sos = self._get_square_of_squares(x, y)
-        if any([s.get_value() == value for s in sos]):
+        if any((s.get_value() == value for s in sos)):
             return False
 
         # If we got this far, then the value is valid!
@@ -53,8 +53,8 @@ class Board:
 
     def is_board_valid(self) -> bool:
         # Check the rows and columns
-        if not all([self._is_valid_square_range(self._get_row(i)) and self._is_valid_square_range(self._get_column(i))
-                    for i in range(0, 9)]):
+        if not all((self._is_valid_square_range(self._get_row(i)) and self._is_valid_square_range(self._get_column(i))
+                    for i in range(0, 9))):
             return False
 
         # Check squares of squares
@@ -80,9 +80,9 @@ class Board:
         return self.squares[9 * row_num : 9 * (row_num + 1)]
 
     def _is_valid_square_range(self, squares: list) -> bool:
-        counter = Counter([s.get_value() for s in squares if s.get_value() is not None])
+        counter = Counter((s.get_value() for s in squares if s.get_value() is not None))
         items = counter.items()
-        return all([v == 1 for k, v in items])
+        return all((v == 1 for k, v in items))
 
     @staticmethod
     def _create_board(board_string: str) -> list:
