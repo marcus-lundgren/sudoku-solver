@@ -46,8 +46,10 @@ class View:
 
     def print_time(self, solving_time: float):
         self.stdscr.addstr(15, 2, f"Solved in {solving_time} seconds")
+        self.stdscr.addstr(16, 2, "Press 'q' to quit")
         self.stdscr.refresh()
-        self.stdscr.getkey()
+        while self.stdscr.getkey() != "q":
+            pass
 
     def _print_outcome(self, text: str):
         self.stdscr.addstr(14, 2, text)
